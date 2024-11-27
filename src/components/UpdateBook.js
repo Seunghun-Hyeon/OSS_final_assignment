@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const UpdateProduct = () => {
+const UpdateBook = () => {
   const { id } = useParams(); // 아이디를 가져온다.
   const navigate = useNavigate();
   const usernameCheck = useRef(null);
@@ -15,15 +15,13 @@ const UpdateProduct = () => {
     fetch(`https://6746607e512ddbd807fba991.mockapi.io/Book/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        setCurrentProduct(data);
+        setCurrentBook(data);
         setLoading(false);
       })
-      .catch((error) =>
-        console.error("Error fetching product details:", error)
-      );
+      .catch((error) => console.error("Error fetching book details:", error));
   }, [id]);
 
-  const [currentProduct, setCurrentProduct] = useState({
+  const [currentBook, setCurrentBook] = useState({
     username: "",
     bookname: "",
     price: "",
@@ -38,11 +36,11 @@ const UpdateProduct = () => {
     return <p>Loading...</p>;
   }
 
-  const updateProduct = () => {
+  const updateBook = () => {
     fetch(`https://6746607e512ddbd807fba991.mockapi.io/Book/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(currentProduct),
+      body: JSON.stringify(currentBook),
     })
       .then((response) => {
         if (response.ok) {
@@ -57,23 +55,23 @@ const UpdateProduct = () => {
   const checkValid = () => {
     let bool = true;
 
-    if (currentProduct.username === "") {
+    if (currentBook.username === "") {
       alert("Please enter your name");
       usernameCheck.current.focus();
       bool = false;
-    } else if (currentProduct.bookname === "") {
+    } else if (currentBook.bookname === "") {
       alert("Please enter book name");
       booknameCheck.current.focus();
       bool = false;
-    } else if (!currentProduct.price || currentProduct.price <= 0) {
+    } else if (!currentBook.price || currentBook.price <= 0) {
       alert("Please enter the price");
       priceCheck.current.focus();
       bool = false;
-    } else if (!currentProduct.quantity || currentProduct.quantity <= 0) {
-      alert("Please enter the qualtity");
+    } else if (!currentBook.quantity || currentBook.quantity <= 0) {
+      alert("Please enter the quantity");
       quantityCheck.current.focus();
       bool = false;
-    } else if (currentProduct.destination === "") {
+    } else if (currentBook.destination === "") {
       alert("Please enter your shipping address");
       destinationCheck.current.focus();
       bool = false;
@@ -84,7 +82,7 @@ const UpdateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkValid()) {
-      updateProduct();
+      updateBook();
     }
   };
 
@@ -102,12 +100,12 @@ const UpdateProduct = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder=""
+          placeholder="User Name"
           className="form-control mb-2"
           ref={usernameCheck}
-          value={currentProduct.username}
+          value={currentBook.username}
           onChange={(e) =>
-            setCurrentProduct({ ...currentProduct, username: e.target.value })
+            setCurrentBook({ ...currentBook, username: e.target.value })
           }
         />
         <input
@@ -115,9 +113,9 @@ const UpdateProduct = () => {
           placeholder="Book Name"
           className="form-control mb-2"
           ref={booknameCheck}
-          value={currentProduct.bookname}
+          value={currentBook.bookname}
           onChange={(e) =>
-            setCurrentProduct({ ...currentProduct, bookname: e.target.value })
+            setCurrentBook({ ...currentBook, bookname: e.target.value })
           }
         />
         <input
@@ -125,9 +123,9 @@ const UpdateProduct = () => {
           placeholder="Price"
           className="form-control mb-2"
           ref={priceCheck}
-          value={currentProduct.price}
+          value={currentBook.price}
           onChange={(e) =>
-            setCurrentProduct({ ...currentProduct, price: e.target.value })
+            setCurrentBook({ ...currentBook, price: e.target.value })
           }
         />
         <div className="form-check mb-2">
@@ -135,13 +133,13 @@ const UpdateProduct = () => {
             type="checkbox"
             className="form-check-input"
             id="coupon"
-            checked={currentProduct.coupon}
+            checked={currentBook.coupon}
             onChange={(e) =>
-              setCurrentProduct({ ...currentProduct, coupon: e.target.checked })
+              setCurrentBook({ ...currentBook, coupon: e.target.checked })
             }
           />
           <label className="form-check-label">
-            {currentProduct.coupon ? "Use Coupon" : "No Coupon"}
+            {currentBook.coupon ? "Use Coupon" : "No Coupon"}
           </label>
         </div>
         <input
@@ -149,17 +147,17 @@ const UpdateProduct = () => {
           placeholder="Quantity"
           className="form-control mb-2"
           ref={quantityCheck}
-          value={currentProduct.quantity}
+          value={currentBook.quantity}
           onChange={(e) =>
-            setCurrentProduct({ ...currentProduct, quantity: e.target.value })
+            setCurrentBook({ ...currentBook, quantity: e.target.value })
           }
         />
         <input
           type="date"
           className="form-control mb-2"
-          value={currentProduct.date}
+          value={currentBook.date}
           onChange={(e) =>
-            setCurrentProduct({ ...currentProduct, date: e.target.value })
+            setCurrentBook({ ...currentBook, date: e.target.value })
           }
         />
         <input
@@ -167,10 +165,10 @@ const UpdateProduct = () => {
           placeholder="Shipping Address"
           className="form-control mb-2"
           ref={destinationCheck}
-          value={currentProduct.destination}
+          value={currentBook.destination}
           onChange={(e) =>
-            setCurrentProduct({
-              ...currentProduct,
+            setCurrentBook({
+              ...currentBook,
               destination: e.target.value,
             })
           }
@@ -186,4 +184,4 @@ const UpdateProduct = () => {
   );
 };
 
-export default UpdateProduct;
+export default UpdateBook;

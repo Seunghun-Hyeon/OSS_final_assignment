@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DeleteProduct from "./DeleteBook";
+import DeleteBook from "./DeleteBook";
 import { Link } from "react-router-dom";
 
-const ShowProducts = () => {
-  const [products, setProducts] = useState([]);
+const ShowBooks = () => {
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts();
+    fetchBooks();
   }, []);
 
-  const fetchProducts = () => {
+  const fetchBooks = () => {
     setLoading(true);
     fetch("https://6746607e512ddbd807fba991.mockapi.io/Book")
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data);
+        setBooks(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -27,12 +27,17 @@ const ShowProducts = () => {
 
   return (
     <div className="container" style={{ textAlign: "center" }}>
-      <h2 style={{ fontSize: "50px" }}>Shopping Basket</h2>
-      <button className="btn btn-primary me-2" onClick={fetchProducts}>
-        Bring all products data
-      </button>
-
-      <Link to="/add" className="btn btn-primary">
+      <h2 style={{ fontSize: "50px" }}>My Cart</h2>
+      <Link
+        to="/add"
+        className="btn btn-primary mb-3"
+        style={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          width: "100px",
+          margin: "45px",
+        }}
+      >
         Add Book
       </Link>
 
@@ -44,46 +49,74 @@ const ShowProducts = () => {
           style={{
             backgroundColor: "#ffffff",
             padding: "10px",
-            border: "1px solid lightgray",
+            // border: "1px solid lightgray",
             borderRadius: "5px",
             margin: "10px",
           }}
         >
+          {/* Header Row */}
           <div
-            className="row mb-2 font-weight-bold text-black"
+            className="row font-weight-bold text-black"
             style={{
               padding: "4px",
               fontSize: "20px",
+              display: "none", // 기본적으로 헤더를 숨김
             }}
           >
-            <div className="col">Username</div>
-            <div className="col">Bookname</div>
-            <div className="col">Price</div>
-            <div className="col">Coupon</div>
-            <div className="col">Quantity</div>
-            <div className="col">Date</div>
-            <div className="col">Destination</div>
-            <div className="col">Actions</div>
+            <div className="col-12 col-md">Username</div>
+            <div className="col-12 col-md">Bookname</div>
+            <div className="col-12 col-md">Price</div>
+            <div className="col-12 col-md">Coupon</div>
+            <div className="col-12 col-md">Quantity</div>
+            <div className="col-12 col-md">Date</div>
+            <div className="col-12 col-md">Destination</div>
+            <div className="col-12 col-md">Actions</div>
           </div>
-          {products.map((product) => (
-            <div className="row mb-2" key={product.id}>
-              <div className="col">{product.username}</div>
-              <div className="col">{product.bookname}</div>
-              <div className="col">${product.price}</div>
-              <div className="col">{product.coupon ? "Yes" : "No"}</div>
-              <div className="col">{product.quantity}</div>
-              <div className="col">{product.date}</div>
-              <div className="col">{product.destination}</div>
-              <div className="col">
+          {/* Data Rows */}
+          {books.map((book) => (
+            <div
+              className="row mb-3 p-2"
+              key={book.id}
+              style={{
+                borderBottom: "1px solid lightgray",
+              }}
+            >
+              <div className="col-12 col-md">
+                <strong>Username:</strong> {book.username}
+              </div>
+              <div className="col-12 col-md">
+                <strong>Bookname:</strong> {book.bookname}
+              </div>
+              <div className="col-12 col-md">
+                <strong>Price:</strong> ₩{book.price}
+              </div>
+              <div className="col-12 col-md">
+                <strong>Coupon:</strong> {book.coupon ? "Yes" : "No"}
+              </div>
+              <div className="col-12 col-md">
+                <strong>Quantity:</strong> {book.quantity}
+              </div>
+              <div className="col-12 col-md">
+                <strong>Date:</strong> {book.date}
+              </div>
+              <div className="col-12 col-md">
+                <strong>Destination:</strong> {book.destination}
+              </div>
+              <div
+                className="col-12 col-md mt-2"
+                style={{ display: "flex", gap: "10px" }}
+              >
                 <Link
-                  to={`/update/${product.id}`}
+                  to={`/update/${book.id}`}
                   className="btn btn-info btn-sm text-white"
+                  style={{ height: "30px" }}
                 >
                   Modify
                 </Link>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => DeleteProduct(product.id, fetchProducts)}
+                  style={{ height: "30px" }}
+                  onClick={() => DeleteBook(book.id, fetchBooks)}
                 >
                   Delete
                 </button>
@@ -96,4 +129,4 @@ const ShowProducts = () => {
   );
 };
 
-export default ShowProducts;
+export default ShowBooks;

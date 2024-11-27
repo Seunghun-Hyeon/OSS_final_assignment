@@ -9,22 +9,15 @@ const Home = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
+        width: "100vw",
         height: "100vh",
+        backgroundImage: "url('/library.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
-      <h1>Book page</h1>
+      <h1 style={{ fontSize: "150px", color: "white" }}>BOOK</h1>
       <div style={{ marginTop: "20px" }}>
-        <Link
-          to="/list"
-          className="btn btn-primary"
-          style={{
-            margin: "10px",
-            width: "160px",
-          }}
-        >
-          Go to Product List
-        </Link>
         <Link
           to="/add"
           className="btn btn-primary"
@@ -33,7 +26,7 @@ const Home = () => {
             width: "160px",
           }}
         >
-          Add Product
+          Add Book To Cart
         </Link>
         <Link
           to="/google"
@@ -43,7 +36,7 @@ const Home = () => {
             width: "160px",
           }}
         >
-          books
+          Show Book List
         </Link>
       </div>
     </div>

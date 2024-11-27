@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BookList = () => {
   const [query, setQuery] = useState("");
@@ -7,6 +8,7 @@ const BookList = () => {
   const [category, setCategory] = useState("All");
 
   const key = "AIzaSyCBFn95bvTPQaBPZnCS-SvQUO_rhgbRJUg";
+  const navigate = useNavigate();
 
   // load data
   const fetchAllBooks = () => {
@@ -49,6 +51,15 @@ const BookList = () => {
     }
   };
 
+  const addToCart = (book) => {
+    navigate(`/add/`, {
+      state: {
+        bookname: book.volumeInfo.title,
+        price: book.saleInfo?.retailPrice?.amount || "Not available",
+      },
+    });
+  };
+
   useEffect(() => {
     fetchAllBooks();
   }, []);
@@ -60,7 +71,7 @@ const BookList = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Google Books</h1>
+      <h1>Book List</h1>
 
       <form onSubmit={handleSearch} style={{ marginBottom: "20px" }}>
         <input
@@ -72,7 +83,12 @@ const BookList = () => {
         />
         <button
           type="submit"
-          style={{ padding: "10px 20px", marginLeft: "10px" }}
+          style={{
+            padding: "10px 20px",
+            marginLeft: "10px",
+            borderRadius: "5px",
+            border: "1px solid black",
+          }}
         >
           Search
         </button>
@@ -84,6 +100,8 @@ const BookList = () => {
           style={{
             padding: "10px 20px",
             marginRight: "10px",
+            borderRadius: "5px",
+            border: "1px solid black",
             backgroundColor: category === "All" ? "#ddd" : "#fff",
           }}
         >
@@ -94,6 +112,8 @@ const BookList = () => {
           style={{
             padding: "10px 20px",
             marginRight: "10px",
+            borderRadius: "5px",
+            border: "1px solid black",
             backgroundColor: category === "Fiction" ? "#ddd" : "#fff",
           }}
         >
@@ -104,6 +124,8 @@ const BookList = () => {
           style={{
             padding: "10px 20px",
             marginRight: "10px",
+            borderRadius: "5px",
+            border: "1px solid black",
             backgroundColor: category === "Science" ? "#ddd" : "#fff",
           }}
         >
@@ -114,6 +136,8 @@ const BookList = () => {
           style={{
             padding: "10px 20px",
             marginRight: "10px",
+            borderRadius: "5px",
+            border: "1px solid black",
             backgroundColor: category === "History" ? "#ddd" : "#fff",
           }}
         >
@@ -123,6 +147,8 @@ const BookList = () => {
           onClick={() => filterByCategory("Art")}
           style={{
             padding: "10px 20px",
+            borderRadius: "5px",
+            border: "1px solid black",
             backgroundColor: category === "Art" ? "#ddd" : "#fff",
           }}
         >
@@ -152,7 +178,6 @@ const BookList = () => {
                   style={{
                     width: "100px",
                     height: "150px",
-                    objectFit: "cover", // 이미지 비율
                   }}
                 />
               )}
@@ -169,7 +194,25 @@ const BookList = () => {
                   {book.volumeInfo.categories
                     ? book.volumeInfo.categories.join(", ")
                     : "None"}
+                  <br></br>
+                  price:{" "}
+                  {book.saleInfo && book.saleInfo.retailPrice
+                    ? `₩${book.saleInfo.retailPrice.amount}`
+                    : "Not available"}
                 </p>
+                <button
+                  onClick={() => addToCart(book)}
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#28a745",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))

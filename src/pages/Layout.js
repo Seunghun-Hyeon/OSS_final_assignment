@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 export default function Layout() {
   return (
     <>
-      <div style={{ padding: "10px", backgroundColor: "blue" }}>
+      <div
+        style={{ padding: "7px", backgroundColor: "#007BFF", border: "3px" }}
+      >
         <ul
           style={{
             listStyleType: "none",
@@ -36,7 +38,7 @@ export default function Layout() {
                 display: "inline-block",
               }}
             >
-              Show Products
+              Go To My Cart
             </Link>
           </li>
           <li>
@@ -49,7 +51,18 @@ export default function Layout() {
                 display: "inline-block",
               }}
             >
-              Add Product
+              Add Book To Cart
+            </Link>
+            <Link
+              to="/google"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                padding: "10px 20px",
+                display: "inline-block",
+              }}
+            >
+              Go To Book List
             </Link>
           </li>
         </ul>
