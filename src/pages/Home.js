@@ -13,7 +13,7 @@ const Home = () => {
         height: "100vh",
       }}
     >
-      <h1>Welcome to My Product Management Homepage</h1>
+      <h1>Book page</h1>
       <div style={{ marginTop: "20px" }}>
         <Link
           to="/list"
@@ -34,6 +34,16 @@ const Home = () => {
           }}
         >
           Add Product
+        </Link>
+        <Link
+          to="/google"
+          className="btn btn-primary"
+          style={{
+            margin: "10px",
+            width: "160px",
+          }}
+        >
+          books
         </Link>
       </div>
     </div>

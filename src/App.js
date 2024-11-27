@@ -5,6 +5,7 @@ import Layout from "./pages/Layout";
 import ShowBooks from "./components/ShowBooks";
 import AddBook from "./components/AddBook";
 import UpdateBook from "./components/UpdateBook";
+import BookList from "./pages/BookList";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="list" element={<ShowBooks />} />
           <Route path="add" element={<AddBook />} />
           <Route path="update/:id" element={<UpdateBook />} />
+          <Route path="google" element={<BookList />} />
         </Route>
       </Routes>
     </Router>
